@@ -87,6 +87,29 @@ class DateTimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Two DateTime are comparable even if their timezone differ.
+     *
+     * Comparaison is made on their absolute timestamp, not the value of their
+     * attributes.
+     *
+     * @test
+     */
+    public function datetimes_with_different_timezone_can_be_comparable()
+    {
+        // Different format, but same date (London + 1 = Paris)
+        $date1 = new DateTime('2014-01-01 12:00:00', new DateTimeZone('Europe/London'));
+        $date2 = new DateTime('2014-01-01 13:00:00', new DateTimeZone('Europe/Paris'));
+
+        $this->assertEquals($date1, $date2);
+
+        // Same format, but different timezone
+        $date1 = new DateTime('2014-01-01 12:00:00', new DateTimeZone('Europe/London'));
+        $date2 = new DateTime('2014-01-01 12:00:00', new DateTimeZone('Europe/Paris'));
+
+        $this->assertLessThan($date1, $date2);
+    }
+
+    /**
      * When you specify a timezone in the 1st argument of the DateTime object, then
      * the second argument is ignored.
      *
