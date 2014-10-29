@@ -6,7 +6,7 @@ class DateTimeTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        // Make those test independant from your PHP config
+        // Make those tests independant from your PHP config
         date_default_timezone_set('UTC');
     }
 
